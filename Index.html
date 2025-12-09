@@ -1,0 +1,2020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grammar Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-light: #60a5fa;
+            --primary-dark: #2563eb;
+            --secondary: #8b5cf6;
+            --accent: #10b981;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --bg-light: #ffffff;
+            --bg-card: #f8fafc;
+            --bg-section: #f1f5f9;
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e1;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.25s ease;
+            --transition-slow: 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 80px;
+        }
+
+        /* Example sentence styling */
+        .example-sentence {
+            display: block;
+            padding: 12px;
+            background: var(--bg-section);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent);
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.4;
+            margin: 12px 0;
+        }
+
+        .example-sentence .highlight {
+            font-weight: 700;
+            text-decoration: underline;
+            color: var(--primary-dark);
+            font-style: normal;
+        }
+
+        /* Simplified view */
+        .simplified-view .card-content,
+        .simplified-view .section-description,
+        .simplified-view .type-indicator,
+        .simplified-view .detail-button,
+        .simplified-view .extra-info,
+        .simplified-view .example-sentence {
+            display: none !important;
+        }
+
+        .simplified-view .card {
+            padding: 16px;
+            min-height: auto;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 16px;
+            overflow-x: hidden;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            z-index: 1000;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Simplified View Toggle */
+        .simplify-toggle {
+            background: var(--bg-card);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .simplify-toggle:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .simplify-toggle.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Search Button */
+        .search-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .search-button:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 60px;
+            padding-top: 20px;
+        }
+
+        /* Quick Stats */
+        .stats-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .stats-bar::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .stat-item {
+            flex: 1;
+            min-width: 110px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            border: 1px solid var(--border-light);
+            transition: var(--transition-normal);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .stat-item:active {
+            transform: scale(0.98);
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* Desktop Navigation */
+        .desktop-nav {
+            display: none;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+        }
+
+        .desktop-nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .desktop-nav-item {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .desktop-nav-item:hover {
+            color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .desktop-nav-item.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Swipe Navigation - Mobile Only */
+        .swipe-nav {
+            position: relative;
+            margin-bottom: 24px;
+            overflow: visible;
+        }
+
+        .swipe-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 8px;
+            padding: 0 0 12px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .swipe-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-item {
+            flex: 0 0 auto;
+            width: 140px;
+            scroll-snap-align: start;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 20px 16px;
+            border: 2px solid var(--border-light);
+            transition: var(--transition-normal);
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+        }
+
+        .nav-item:active {
+            transform: scale(0.96);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-color: var(--primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            display: block;
+            height: 24px;
+        }
+
+        .nav-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            line-height: 1.2;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .section-description {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.5;
+        }
+
+        /* Cards - Fixed Layout */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .card {
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            border: 1px solid var(--border-light);
+            transition: var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            user-select: none;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card:hover {
+            border-color: var(--primary-light);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.3;
+            flex: 1;
+            margin-right: 12px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .card-content {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            flex: 1;
+        }
+
+        /* Type Indicator */
+        .type-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: var(--bg-section);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin: 8px 0;
+            align-self: flex-start;
+        }
+
+        .type-indicator i {
+            font-size: 10px;
+        }
+
+        /* Detail Button - Always at bottom */
+        .card-footer {
+            margin-top: auto;
+            padding-top: 12px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .detail-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            text-decoration: none;
+            border: none;
+            outline: none;
+        }
+
+        .detail-button:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-light);
+            z-index: 1000;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-button {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px;
+            border-radius: var(--radius-md);
+            color: var(--text-tertiary);
+            text-decoration: none;
+            transition: var(--transition-normal);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .nav-button:active {
+            background: var(--bg-section);
+        }
+
+        .nav-button.active {
+            color: var(--primary);
+        }
+
+        .nav-button i {
+            font-size: 20px;
+            margin-bottom: 4px;
+            height: 20px;
+        }
+
+        .nav-button span {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: transparent;
+            z-index: 999;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* Detail Modal - Fixed Positioning */
+        .detail-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .detail-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 70px 20px 20px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-light);
+        }
+
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .modal-category {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .modal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--bg-light);
+        }
+
+        .modal-section {
+            margin-bottom: 24px;
+        }
+
+        .modal-section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-section-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding-left: 8px;
+        }
+
+        .modal-examples {
+            background: var(--bg-section);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .modal-example {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+            font-style: italic;
+        }
+
+        .modal-example:last-child {
+            border-bottom: none;
+        }
+
+        .modal-example .highlight {
+            font-weight: 700;
+            text-decoration: underline;
+            color: var(--primary-dark);
+            font-style: normal;
+        }
+
+        .close-modal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-section);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            color: var(--text-secondary);
+            z-index: 2001;
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Search Modal */
+        .search-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .search-modal.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .search-header {
+            padding: 70px 16px 16px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-light);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: var(--transition-normal);
+            background: var(--bg-card);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .search-results {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            background: var(--bg-light);
+        }
+
+        .search-result {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border-radius: var(--radius-sm);
+        }
+
+        .search-result:hover {
+            background: var(--bg-section);
+        }
+
+        .search-result-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .search-result-category {
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Swipe Indicator */
+        .swipe-indicator {
+            text-align: center;
+            padding: 8px 0;
+            color: var(--text-tertiary);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .swipe-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .swipe-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border-light);
+            transition: var(--transition-normal);
+        }
+
+        .swipe-dot.active {
+            background: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .container {
+                max-width: 640px;
+                padding: 0 24px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .card {
+                min-height: 220px;
+            }
+            
+            .bottom-nav {
+                display: none;
+            }
+            
+            body {
+                padding-bottom: 0;
+            }
+            
+            .swipe-nav, .swipe-indicator {
+                display: none;
+            }
+            
+            .desktop-nav {
+                display: block;
+            }
+            
+            .top-bar {
+                padding: 12px 24px;
+            }
+            
+            .modal-header {
+                padding: 30px 40px 24px;
+            }
+            
+            .modal-content {
+                padding: 24px 40px;
+            }
+            
+            .close-modal {
+                top: 30px;
+                right: 40px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 768px;
+            }
+            
+            .stats-bar {
+                justify-content: center;
+            }
+            
+            .stat-item {
+                min-width: 140px;
+            }
+            
+            .modal-header {
+                padding: 30px 40px 24px;
+            }
+            
+            .modal-content {
+                padding: 30px 40px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 1024px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 24px;
+            }
+            
+            .desktop-nav-container {
+                gap: 12px;
+            }
+            
+            .desktop-nav-item {
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Dark Mode Support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary: #60a5fa;
+                --primary-light: #93c5fd;
+                --primary-dark: #3b82f6;
+                --secondary: #a78bfa;
+                --accent: #34d399;
+                --bg-light: #0f172a;
+                --bg-card: #1e293b;
+                --bg-section: #334155;
+                --border-light: #475569;
+                --border-medium: #64748b;
+                --text-primary: #f8fafc;
+                --text-secondary: #cbd5e1;
+                --text-tertiary: #94a3b8;
+            }
+            
+            .top-bar,
+            .bottom-nav,
+            .detail-modal,
+            .search-modal {
+                background: rgba(15, 23, 42, 0.98);
+                border-color: var(--border-light);
+            }
+            
+            .card {
+                background: var(--bg-card);
+            }
+            
+            .search-input {
+                background: var(--bg-card);
+                color: var(--text-primary);
+            }
+            
+            .search-input:focus {
+                background: var(--bg-light);
+            }
+            
+            .example-sentence .highlight,
+            .modal-example .highlight {
+                color: var(--primary-light);
+            }
+            
+            .modal-header,
+            .modal-content,
+            .search-header,
+            .search-results {
+                background: var(--bg-light);
+            }
+        }
+        
+        /* Fix for empty states */
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: var(--text-tertiary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-language"></i>
+            </div>
+            <div class="logo-text">Grammar Guide</div>
+        </div>
+        
+        <div class="header-controls">
+            <button class="simplify-toggle" id="simplifyToggle">
+                <i class="fas fa-eye"></i>
+                <span>Simplify</span>
+            </button>
+            <button class="search-button" id="searchButton">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Quick Stats -->
+            <div class="stats-bar">
+                <div class="stat-item" data-section="parts-of-speech">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Parts of Speech</div>
+                </div>
+                <div class="stat-item" data-section="phrases">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Phrase Types</div>
+                </div>
+                <div class="stat-item" data-section="clauses">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Clause Types</div>
+                </div>
+                <div class="stat-item" data-section="figures-of-speech">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Figures of Speech</div>
+                </div>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="desktop-nav">
+                <div class="desktop-nav-container">
+                    <div class="desktop-nav-item active" data-section="parts-of-speech">
+                        <i class="fas fa-font"></i>
+                        <span>Parts of Speech</span>
+                    </div>
+                    <div class="desktop-nav-item" data-section="phrases">
+                        <i class="fas fa-quote-right"></i>
+                        <span>Phrases</span>
+                    </div>
+                    <div class="desktop-nav-item" data-section="clauses">
+                        <i class="fas fa-code-branch"></i>
+                        <span>Clauses</span>
+                    </div>
+                    <div class="desktop-nav-item" data-section="sentences">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Sentences</span>
+                    </div>
+                    <div class="desktop-nav-item" data-section="figures-of-speech">
+                        <i class="fas fa-theater-masks"></i>
+                        <span>Figures of Speech</span>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Swipe Navigation - Mobile Only -->
+            <div class="swipe-nav">
+                <div class="swipe-container" id="swipeNav">
+                    <div class="nav-item active" data-section="parts-of-speech">
+                        <i class="fas fa-font nav-icon"></i>
+                        <div class="nav-title">Parts of Speech</div>
+                    </div>
+                    <div class="nav-item" data-section="phrases">
+                        <i class="fas fa-quote-right nav-icon"></i>
+                        <div class="nav-title">Phrases</div>
+                    </div>
+                    <div class="nav-item" data-section="clauses">
+                        <i class="fas fa-code-branch nav-icon"></i>
+                        <div class="nav-title">Clauses</div>
+                    </div>
+                    <div class="nav-item" data-section="sentences">
+                        <i class="fas fa-file-alt nav-icon"></i>
+                        <div class="nav-title">Sentences</div>
+                    </div>
+                    <div class="nav-item" data-section="figures-of-speech">
+                        <i class="fas fa-theater-masks nav-icon"></i>
+                        <div class="nav-title">Figures</div>
+                    </div>
+                </div>
+                
+                <div class="swipe-indicator">
+                    <span>Swipe for more</span>
+                    <div class="swipe-dots">
+                        <div class="swipe-dot active"></div>
+                        <div class="swipe-dot"></div>
+                        <div class="swipe-dot"></div>
+                        <div class="swipe-dot"></div>
+                        <div class="swipe-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sections -->
+            <div id="sections-container">
+                <!-- Parts of Speech Section -->
+                <section id="parts-of-speech" class="section active">
+                    <div class="section-header">
+                        <h1 class="section-title">Parts of Speech</h1>
+                        <p class="section-description">The 8 core categories used to classify words based on their function in a sentence.</p>
+                    </div>
+                    
+                    <div class="cards-grid" id="parts-cards">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Phrases Section -->
+                <section id="phrases" class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">Phrases</h1>
+                        <p class="section-description">Groups of words that work together but don't contain both a subject and a verb.</p>
+                    </div>
+                    
+                    <div class="cards-grid" id="phrases-cards">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Clauses Section -->
+                <section id="clauses" class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">Clauses</h1>
+                        <p class="section-description">Groups of words that contain a subject and a verb. They can be independent or dependent.</p>
+                    </div>
+                    
+                    <div class="cards-grid" id="clauses-cards">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Sentences Section -->
+                <section id="sentences" class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">Sentence Types</h1>
+                        <p class="section-description">Sentences can be categorized by their structure and their function.</p>
+                    </div>
+                    
+                    <div class="cards-grid" id="sentences-cards">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Figures of Speech Section -->
+                <section id="figures-of-speech" class="section">
+                    <div class="section-header">
+                        <h1 class="section-title">Figures of Speech</h1>
+                        <p class="section-description">Literary devices used to make language more interesting, expressive, and impactful.</p>
+                    </div>
+                    
+                    <div class="cards-grid" id="figures-cards">
+                        <!-- Cards will be populated by JavaScript -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-button active" data-section="parts-of-speech">
+            <i class="fas fa-font"></i>
+            <span>Speech</span>
+        </div>
+        <div class="nav-button" data-section="phrases">
+            <i class="fas fa-quote-right"></i>
+            <span>Phrases</span>
+        </div>
+        <div class="nav-button" data-section="clauses">
+            <i class="fas fa-code-branch"></i>
+            <span>Clauses</span>
+        </div>
+        <div class="nav-button" data-section="sentences">
+            <i class="fas fa-file-alt"></i>
+            <span>Sentences</span>
+        </div>
+        <div class="nav-button" data-section="figures-of-speech">
+            <i class="fas fa-theater-masks"></i>
+            <span>Figures</span>
+        </div>
+    </nav>
+
+    <!-- Detail Modal -->
+    <div class="detail-modal" id="detailModal">
+        <button class="close-modal" id="closeDetailModal">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header">
+            <div>
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-category" id="modalCategory"></div>
+            </div>
+        </div>
+        <div class="modal-content" id="modalContent">
+            <!-- Modal content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-header">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search grammar terms...">
+        </div>
+        <div class="search-results" id="searchResults">
+            <!-- Search results will be populated by JavaScript -->
+        </div>
+        <button class="close-modal" id="closeSearchModal">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <script>
+        // Simplified and corrected data for all grammar sections
+        const grammarData = {
+            partsOfSpeech: [
+                {
+                    title: "Noun",
+                    description: "A naming word for people, places, things, or ideas.",
+                    example: "The <span class='highlight'>cat</span> slept peacefully on the sofa.",
+                    icon: "fas fa-user",
+                    function: "Subject, object, complement in a sentence",
+                    types: "Common, proper, abstract, collective, countable, uncountable",
+                    moreExamples: [
+                        "The <span class='highlight'>dog</span> barked loudly.",
+                        "She visited <span class='highlight'>Paris</span> last summer.",
+                        "His <span class='highlight'>happiness</span> was evident."
+                    ],
+                    detailedInfo: "Nouns are the building blocks of sentences. They can be singular or plural, and can be modified by adjectives. Proper nouns are always capitalized."
+                },
+                {
+                    title: "Pronoun",
+                    description: "A word that replaces a noun to avoid repetition.",
+                    example: "<span class='highlight'>She</span> finished her homework before dinner.",
+                    icon: "fas fa-exchange-alt",
+                    function: "Replaces nouns to avoid repetition",
+                    types: "Personal, possessive, reflexive, demonstrative, relative, interrogative",
+                    moreExamples: [
+                        "<span class='highlight'>He</span> is going to the store.",
+                        "This book is <span class='highlight'>hers</span>, not mine.",
+                        "<span class='highlight'>They</span> are coming to dinner."
+                    ],
+                    detailedInfo: "Pronouns help make sentences less repetitive and more fluid. They must agree with the nouns they replace in number, gender, and case."
+                },
+                {
+                    title: "Verb",
+                    description: "A word that expresses action, occurrence, or state of being.",
+                    example: "The children <span class='highlight'>run</span> in the park every morning.",
+                    icon: "fas fa-running",
+                    function: "Expresses action, occurrence, or state of being",
+                    types: "Action, linking, helping, transitive, intransitive, regular, irregular",
+                    moreExamples: [
+                        "She <span class='highlight'>runs</span> five miles every day.",
+                        "I <span class='highlight'>think</span> therefore I exist.",
+                        "He <span class='highlight'>is</span> a talented musician."
+                    ],
+                    detailedInfo: "Verbs are essential to sentence structure. They can change form to show tense, mood, voice, aspect, and agreement with the subject."
+                },
+                {
+                    title: "Adjective",
+                    description: "A word that describes or modifies a noun.",
+                    example: "The <span class='highlight'>red</span> car drove down the street.",
+                    icon: "fas fa-palette",
+                    function: "Modifies nouns or pronouns",
+                    types: "Descriptive, quantitative, demonstrative, possessive, interrogative, proper",
+                    moreExamples: [
+                        "The <span class='highlight'>beautiful</span> sunset painted the sky.",
+                        "She has <span class='highlight'>three</span> older brothers.",
+                        "What a <span class='highlight'>wonderful</span> surprise!"
+                    ],
+                    detailedInfo: "Adjectives add detail and specificity to nouns. They can come before the noun (attributive) or after linking verbs (predicative)."
+                },
+                {
+                    title: "Adverb",
+                    description: "A word that modifies a verb, adjective, or other adverb.",
+                    example: "She completed the task <span class='highlight'>quickly</span> and efficiently.",
+                    icon: "fas fa-tachometer-alt",
+                    function: "Modifies verbs, adjectives, or other adverbs",
+                    types: "Manner, time, place, degree, frequency, relative, interrogative",
+                    moreExamples: [
+                        "She ran <span class='highlight'>swiftly</span> to catch the bus.",
+                        "That movie was <span class='highlight'>extremely</span> entertaining.",
+                        "I saw him <span class='highlight'>yesterday</span> at the market."
+                    ],
+                    detailedInfo: "Adverbs often end in -ly and answer questions like how, when, where, why, and to what extent."
+                },
+                {
+                    title: "Preposition",
+                    description: "A word that shows relationships between nouns/pronouns and other words.",
+                    example: "The book is <span class='highlight'>on</span> the table.",
+                    icon: "fas fa-arrows-alt",
+                    function: "Shows relationships in time, space, or logic",
+                    types: "Time, place, direction, agent, instrument, possession, purpose",
+                    moreExamples: [
+                        "We'll meet <span class='highlight'>at</span> 3 PM.",
+                        "She went <span class='highlight'>with</span> her friends.",
+                        "The cat jumped <span class='highlight'>over</span> the fence."
+                    ],
+                    detailedInfo: "Prepositions are always followed by a noun or pronoun (the object of the preposition), forming a prepositional phrase."
+                },
+                {
+                    title: "Conjunction",
+                    description: "A word that connects words, phrases, or clauses.",
+                    example: "I wanted to go, <span class='highlight'>but</span> I was too tired.",
+                    icon: "fas fa-link",
+                    function: "Connects words, phrases, or clauses",
+                    types: "Coordinating, subordinating, correlative, conjunctive adverbs",
+                    moreExamples: [
+                        "She likes tea <span class='highlight'>and</span> coffee.",
+                        "I'll call you <span class='highlight'>if</span> I'm late.",
+                        "You can come with us, <span class='highlight'>or</span> you can stay."
+                    ],
+                    detailedInfo: "Conjunctions join grammatical elements. Coordinating conjunctions join equal elements, while subordinating conjunctions join dependent clauses to independent ones."
+                },
+                {
+                    title: "Interjection",
+                    description: "A word or phrase that expresses emotion or surprise.",
+                    example: "<span class='highlight'>Wow!</span> That's an amazing performance!",
+                    icon: "fas fa-exclamation-circle",
+                    function: "Expresses sudden emotion or feeling",
+                    types: "Mild, strong, volitive, emotional, cognitive",
+                    moreExamples: [
+                        "<span class='highlight'>Ouch!</span> That hurt!",
+                        "<span class='highlight'>Hooray!</span> We won!",
+                        "<span class='highlight'>Oh no!</span> I forgot my keys."
+                    ],
+                    detailedInfo: "Interjections are often followed by exclamation points. They can stand alone or be included in sentences to convey strong feeling."
+                }
+            ],
+            
+            phrases: [
+                {
+                    title: "Noun Phrase",
+                    description: "A phrase centered around a noun, including determiners and modifiers.",
+                    example: "<span class='highlight'>The big red balloon</span> floated into the sky.",
+                    icon: "fas fa-font",
+                    function: "Acts as subject, object, or complement in a sentence",
+                    types: "Simple, complex, appositive, gerund, infinitive",
+                    moreExamples: [
+                        "<span class='highlight'>The tall stranger</span> entered the room.",
+                        "<span class='highlight'>My favorite memory</span> is of summer camp.",
+                        "She bought <span class='highlight'>three French cookbooks</span>."
+                    ],
+                    detailedInfo: "Noun phrases function as nouns in sentences. They can be as simple as a single noun or complex with multiple modifiers."
+                },
+                {
+                    title: "Verb Phrase",
+                    description: "A main verb plus any helping verbs.",
+                    example: "She <span class='highlight'>has been running</span> for an hour.",
+                    icon: "fas fa-running",
+                    function: "Expresses the action or state of the subject",
+                    types: "Finite, non-finite, transitive, intransitive, linking",
+                    moreExamples: [
+                        "She <span class='highlight'>will have finished</span> by tomorrow.",
+                        "They <span class='highlight'>might be going</span> to the party.",
+                        "He <span class='highlight'>has been studying</span> all night."
+                    ],
+                    detailedInfo: "Verb phrases include the main verb and any auxiliary (helping) verbs. They show tense, aspect, mood, and voice."
+                },
+                {
+                    title: "Prepositional Phrase",
+                    description: "A phrase beginning with a preposition and ending with a noun/pronoun.",
+                    example: "The cat slept <span class='highlight'>in the garden</span>.",
+                    icon: "fas fa-map-marker-alt",
+                    function: "Modifies nouns (adjectival) or verbs (adverbial)",
+                    types: "Adjectival, adverbial, nominal",
+                    moreExamples: [
+                        "The book <span class='highlight'>on the shelf</span> is mine.",
+                        "We walked <span class='highlight'>through the forest</span>.",
+                        "She sat <span class='highlight'>beside her friend</span>."
+                    ],
+                    detailedInfo: "Prepositional phrases can function as adjectives (modifying nouns) or adverbs (modifying verbs). They always begin with a preposition and end with its object."
+                },
+                {
+                    title: "Adjective Phrase",
+                    description: "A phrase that acts as an adjective to modify a noun.",
+                    example: "The children were <span class='highlight'>full of joy</span>.",
+                    icon: "fas fa-palette",
+                    function: "Modifies nouns or pronouns",
+                    types: "Attributive, predicative, postpositive",
+                    moreExamples: [
+                        "The man <span class='highlight'>proud of his son</span> smiled.",
+                        "A pie <span class='highlight'>delicious and warm</span> sat on the counter.",
+                        "Children <span class='highlight'>eager to learn</span> filled the room."
+                    ],
+                    detailedInfo: "Adjective phrases provide more detailed description than single adjectives. They can include intensifiers, complements, or other modifiers."
+                },
+                {
+                    title: "Adverb Phrase",
+                    description: "A phrase that acts as an adverb to modify a verb, adjective, or adverb.",
+                    example: "She ran <span class='highlight'>very quickly</span> to catch the bus.",
+                    icon: "fas fa-tachometer-alt",
+                    function: "Modifies verbs, adjectives, or other adverbs",
+                    types: "Manner, time, place, degree, frequency",
+                    moreExamples: [
+                        "She ran <span class='highlight'>extremely fast</span>.",
+                        "He spoke <span class='highlight'>quite softly</span>.",
+                        "They arrived <span class='highlight'>surprisingly early</span>."
+                    ],
+                    detailedInfo: "Adverb phrases provide information about manner, time, place, frequency, or degree. They often contain intensifiers like 'very', 'quite', or 'extremely'."
+                }
+            ],
+            
+            clauses: [
+                {
+                    title: "Independent Clause",
+                    description: "Contains a subject and verb, expresses a complete thought. Can stand alone.",
+                    example: "<span class='highlight'>She finished her work</span> before the deadline.",
+                    type: "independent",
+                    icon: "fas fa-check-circle",
+                    function: "Expresses a complete thought",
+                    types: "Simple, compound, complex, compound-complex",
+                    moreExamples: [
+                        "<span class='highlight'>The sun rises in the east</span>.",
+                        "<span class='highlight'>Birds sing at dawn</span>.",
+                        "<span class='highlight'>She will graduate next year</span>."
+                    ],
+                    detailedInfo: "Independent clauses contain both a subject and a predicate and express a complete idea. They can function as simple sentences or be combined with other clauses."
+                },
+                {
+                    title: "Dependent Clause",
+                    description: "Contains a subject and verb but cannot stand alone as a sentence.",
+                    example: "<span class='highlight'>Because she was tired</span>, she went to bed early.",
+                    type: "dependent",
+                    icon: "fas fa-link",
+                    function: "Adds information to an independent clause",
+                    types: "Noun, adjective, adverb",
+                    moreExamples: [
+                        "She went to bed early <span class='highlight'>because she was tired</span>.",
+                        "The woman <span class='highlight'>who lives next door</span> is a doctor.",
+                        "<span class='highlight'>When the rain stops</span>, we'll go for a walk."
+                    ],
+                    detailedInfo: "Dependent clauses cannot stand alone as complete sentences. They must be connected to an independent clause to form a complete thought."
+                },
+                {
+                    title: "Noun Clause",
+                    description: "A dependent clause that functions as a noun in a sentence.",
+                    example: "I know <span class='highlight'>what you mean</span>.",
+                    type: "dependent",
+                    icon: "fas fa-font",
+                    function: "Acts as subject, object, complement in a sentence",
+                    types: "Subject, object, complement, appositive",
+                    moreExamples: [
+                        "<span class='highlight'>What she said</span> surprised everyone.",
+                        "I don't understand <span class='highlight'>why he left</span>.",
+                        "The truth is <span class='highlight'>that we need more time</span>."
+                    ],
+                    detailedInfo: "Noun clauses begin with words like that, what, whatever, who, whoever, which, whichever, when, where, how, or why."
+                },
+                {
+                    title: "Adjective Clause",
+                    description: "A dependent clause that modifies a noun or pronoun.",
+                    example: "The woman <span class='highlight'>who lives next door</span> is a doctor.",
+                    type: "dependent",
+                    icon: "fas fa-palette",
+                    function: "Modifies nouns or pronouns",
+                    types: "Restrictive, non-restrictive",
+                    moreExamples: [
+                        "The book <span class='highlight'>that I'm reading</span> is fascinating.",
+                        "My brother, <span class='highlight'>who is a lawyer</span>, lives in New York.",
+                        "The restaurant <span class='highlight'>where we met</span> has closed."
+                    ],
+                    detailedInfo: "Adjective clauses usually begin with relative pronouns (who, whom, whose, which, that) or relative adverbs (where, when, why)."
+                },
+                {
+                    title: "Adverb Clause",
+                    description: "A dependent clause that functions as an adverb.",
+                    example: "She went to bed early <span class='highlight'>because she was tired</span>.",
+                    type: "dependent",
+                    icon: "fas fa-tachometer-alt",
+                    function: "Modifies verbs, adjectives, or other adverbs",
+                    types: "Time, place, manner, reason, condition, concession, comparison",
+                    moreExamples: [
+                        "<span class='highlight'>When the alarm rang</span>, I jumped out of bed.",
+                        "He works hard <span class='highlight'>so that he can succeed</span>.",
+                        "<span class='highlight'>Although it was raining</span>, we went for a walk."
+                    ],
+                    detailedInfo: "Adverb clauses begin with subordinating conjunctions like after, although, as, because, before, if, since, though, unless, until, when, where, while, etc."
+                }
+            ],
+            
+            sentences: [
+                {
+                    title: "Simple Sentence",
+                    description: "Contains one independent clause with a subject and verb.",
+                    example: "<span class='highlight'>The dog barked.</span>",
+                    icon: "fas fa-minus",
+                    function: "Expresses a single complete thought",
+                    types: "Declarative, interrogative, imperative, exclamatory",
+                    moreExamples: [
+                        "<span class='highlight'>She reads books.</span>",
+                        "<span class='highlight'>The sun is shining.</span>",
+                        "<span class='highlight'>I love chocolate.</span>"
+                    ],
+                    detailedInfo: "Simple sentences are the most basic sentence structure, containing just one independent clause. They are clear and direct."
+                },
+                {
+                    title: "Compound Sentence",
+                    description: "Contains two or more independent clauses joined by a conjunction.",
+                    example: "<span class='highlight'>I wanted to go, but I was too tired.</span>",
+                    icon: "fas fa-plus",
+                    function: "Expresses two or more related complete thoughts",
+                    types: "Coordinating, semicolon, conjunctive adverb",
+                    moreExamples: [
+                        "<span class='highlight'>She studied hard, and she passed the exam.</span>",
+                        "<span class='highlight'>The sun set; the stars appeared.</span>",
+                        "<span class='highlight'>He was hungry; however, he decided to wait.</span>"
+                    ],
+                    detailedInfo: "Compound sentences use coordinating conjunctions (FANBOYS: for, and, nor, but, or, yet, so), semicolons, or conjunctive adverbs to connect independent clauses."
+                },
+                {
+                    title: "Complex Sentence",
+                    description: "Contains one independent clause and at least one dependent clause.",
+                    example: "<span class='highlight'>She went to bed early because she was tired.</span>",
+                    icon: "fas fa-code-branch",
+                    function: "Expresses a main idea with supporting information",
+                    types: "Adjective clause, adverb clause, noun clause",
+                    moreExamples: [
+                        "<span class='highlight'>When the alarm rang, I jumped out of bed.</span>",
+                        "<span class='highlight'>The book that I'm reading is fascinating.</span>",
+                        "<span class='highlight'>I know what you mean.</span>"
+                    ],
+                    detailedInfo: "Complex sentences show relationships between ideas, with the dependent clause adding detail to the main idea in the independent clause."
+                },
+                {
+                    title: "Compound-Complex Sentence",
+                    description: "Contains at least two independent clauses and one dependent clause.",
+                    example: "<span class='highlight'>Although she was tired, she finished her work, and then she went to bed.</span>",
+                    icon: "fas fa-project-diagram",
+                    function: "Expresses multiple related ideas with supporting information",
+                    types: "Various combinations of clauses",
+                    moreExamples: [
+                        "<span class='highlight'>When the rain stopped, we went for a walk, and we enjoyed the fresh air.</span>",
+                        "<span class='highlight'>She loves movies that have happy endings, so she watches comedies.</span>",
+                        "<span class='highlight'>If you study hard, you will pass the exam, and you will feel proud.</span>"
+                    ],
+                    detailedInfo: "Compound-complex sentences are the most sophisticated sentence structure, combining the features of both compound and complex sentences."
+                },
+                {
+                    title: "Declarative Sentence",
+                    description: "Makes a statement and ends with a period.",
+                    example: "<span class='highlight'>The sun rises in the east.</span>",
+                    icon: "fas fa-info-circle",
+                    function: "States a fact, opinion, or idea",
+                    types: "Affirmative, negative",
+                    moreExamples: [
+                        "<span class='highlight'>She enjoys reading mystery novels.</span>",
+                        "<span class='highlight'>The concert starts at 8 PM.</span>",
+                        "<span class='highlight'>I don't like spicy food.</span>"
+                    ],
+                    detailedInfo: "Declarative sentences are the most common type of sentence in English. They simply state information and end with a period."
+                }
+            ],
+            
+            figuresOfSpeech: [
+                {
+                    title: "Simile",
+                    description: "A comparison between two unlike things using 'like' or 'as'.",
+                    example: "Her smile was <span class='highlight'>as bright as the sun</span>.",
+                    icon: "fas fa-equals",
+                    function: "Creates vivid imagery through comparison",
+                    types: "Adjectival, adverbial, predicative",
+                    moreExamples: [
+                        "He runs <span class='highlight'>like the wind</span>.",
+                        "The water was <span class='highlight'>as cold as ice</span>.",
+                        "She sings <span class='highlight'>like an angel</span>."
+                    ],
+                    detailedInfo: "Similes make comparisons explicit by using 'like' or 'as', helping readers visualize concepts by relating them to familiar things."
+                },
+                {
+                    title: "Metaphor",
+                    description: "A direct comparison between two unlike things without using 'like' or 'as'.",
+                    example: "Her voice was <span class='highlight'>music to his ears</span>.",
+                    icon: "fas fa-random",
+                    function: "Creates powerful imagery through implied comparison",
+                    types: "Conceptual, structural, orientational",
+                    moreExamples: [
+                        "The world is <span class='highlight'>a stage</span>.",
+                        "He has <span class='highlight'>a heart of stone</span>.",
+                        "Life is <span class='highlight'>a journey</span>."
+                    ],
+                    detailedInfo: "Metaphors state that one thing is another thing, creating a more powerful and direct comparison than similes."
+                },
+                {
+                    title: "Personification",
+                    description: "Giving human qualities to inanimate objects or abstract ideas.",
+                    example: "The wind <span class='highlight'>whispered secrets</span> through the trees.",
+                    icon: "fas fa-user",
+                    function: "Makes non-human things seem relatable",
+                    types: "Attribution of human actions, emotions, thoughts",
+                    moreExamples: [
+                        "The stars <span class='highlight'>danced</span> in the night sky.",
+                        "Time <span class='highlight'>waits for no one</span>.",
+                        "The old house <span class='highlight'>groaned</span> in the storm."
+                    ],
+                    detailedInfo: "Personification helps readers connect with non-human elements by attributing human characteristics to them."
+                },
+                {
+                    title: "Hyperbole",
+                    description: "An extreme exaggeration used for emphasis or effect.",
+                    example: "I'm so hungry I could <span class='highlight'>eat a horse</span>.",
+                    icon: "fas fa-expand-arrows-alt",
+                    function: "Creates emphasis through exaggeration",
+                    types: "Overstatement, understatement",
+                    moreExamples: [
+                        "I've told you <span class='highlight'>a million times</span>.",
+                        "This bag weighs <span class='highlight'>a ton</span>.",
+                        "I haven't seen you in <span class='highlight'>ages</span>."
+                    ],
+                    detailedInfo: "Hyperbole is not meant to be taken literally but is used to create a strong impression or emphasize a point."
+                },
+                {
+                    title: "Alliteration",
+                    description: "Repetition of the same consonant sound at the beginning of words.",
+                    example: "<span class='highlight'>Peter Piper picked a peck</span> of pickled peppers.",
+                    icon: "fas fa-font",
+                    function: "Creates rhythm and musicality",
+                    types: "Initial, consonantal, assonance",
+                    moreExamples: [
+                        "<span class='highlight'>Sally sells seashells</span> by the seashore.",
+                        "<span class='highlight'>Wild winds whipped</span> through the trees.",
+                        "<span class='highlight'>Big blue balloons</span> bounced by the window."
+                    ],
+                    detailedInfo: "Alliteration creates a pleasing sound pattern and helps make phrases more memorable and impactful."
+                },
+                {
+                    title: "Onomatopoeia",
+                    description: "Words that imitate the sound they describe.",
+                    example: "The bacon <span class='highlight'>sizzled</span> in the pan.",
+                    icon: "fas fa-volume-up",
+                    function: "Creates sound imagery",
+                    types: "Direct, indirect",
+                    moreExamples: [
+                        "The bee <span class='highlight'>buzzed</span> around the flowers.",
+                        "Thunder <span class='highlight'>rumbled</span> in the distance.",
+                        "The fire <span class='highlight'>crackled</span> in the fireplace."
+                    ],
+                    detailedInfo: "Onomatopoeic words help readers hear the sounds being described, creating a more immersive experience."
+                },
+                {
+                    title: "Oxymoron",
+                    description: "A figure of speech that combines contradictory terms.",
+                    example: "The silence was <span class='highlight'>deafening</span>.",
+                    icon: "fas fa-exchange-alt",
+                    function: "Creates paradoxical effect through contradiction",
+                    types: "Adjective-noun, adverb-adjective, noun-noun",
+                    moreExamples: [
+                        "It was a <span class='highlight'>bittersweet</span> moment.",
+                        "He was <span class='highlight'>clearly confused</span>.",
+                        "The <span class='highlight'>living dead</span> roamed the streets."
+                    ],
+                    detailedInfo: "Oxymorons create a paradoxical effect by combining two contradictory terms, often to highlight a complex or nuanced idea."
+                }
+            ]
+        };
+
+        // DOM Elements
+        const sections = document.querySelectorAll('.section');
+        const navItems = document.querySelectorAll('.nav-item, .desktop-nav-item, .nav-button, .stat-item');
+        const swipeDots = document.querySelectorAll('.swipe-dot');
+        const detailModal = document.getElementById('detailModal');
+        const searchModal = document.getElementById('searchModal');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const simplifyToggle = document.getElementById('simplifyToggle');
+        const progressBar = document.getElementById('progressBar');
+        
+        // State variables
+        let currentSection = 'parts-of-speech';
+        let isSimplifiedView = false;
+        let currentCardIndex = 0;
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            populateAllCards();
+            setupEventListeners();
+            updateProgressBar();
+        });
+        
+        // Populate all cards with data
+        function populateAllCards() {
+            populateCards('parts-of-speech', 'parts-cards', grammarData.partsOfSpeech);
+            populateCards('phrases', 'phrases-cards', grammarData.phrases);
+            populateCards('clauses', 'clauses-cards', grammarData.clauses);
+            populateCards('sentences', 'sentences-cards', grammarData.sentences);
+            populateCards('figures-of-speech', 'figures-cards', grammarData.figuresOfSpeech);
+        }
+        
+        // Populate cards for a specific section
+        function populateCards(sectionId, containerId, data) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            data.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.dataset.index = index;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">${item.title}</h3>
+                        <div class="card-icon">
+                            <i class="${item.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="card-content">${item.description}</div>
+                    <div class="example-sentence">${item.example}</div>
+                    <div class="type-indicator">
+                        <i class="fas fa-tag"></i>
+                        <span>${item.types}</span>
+                    </div>
+                    <div class="card-footer">
+                        <button class="detail-button" data-section="${sectionId}" data-index="${index}">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Details</span>
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navigation items
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.dataset.section;
+                    if (section) {
+                        switchSection(section);
+                    }
+                });
+            });
+            
+            // Detail buttons
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.detail-button')) {
+                    const button = e.target.closest('.detail-button');
+                    const section = button.dataset.section;
+                    const index = parseInt(button.dataset.index);
+                    openDetailModal(section, index);
+                }
+            });
+            
+            // Close modals
+            document.getElementById('closeDetailModal').addEventListener('click', closeDetailModal);
+            document.getElementById('closeSearchModal').addEventListener('click', closeSearchModal);
+            
+            // Search functionality
+            document.getElementById('searchButton').addEventListener('click', openSearchModal);
+            searchInput.addEventListener('input', performSearch);
+            
+            // Simplify toggle
+            simplifyToggle.addEventListener('click', toggleSimplifiedView);
+            
+            // Swipe navigation
+            setupSwipeNavigation();
+            
+            // Update progress bar on scroll
+            window.addEventListener('scroll', updateProgressBar);
+        }
+        
+        // Switch between sections
+        function switchSection(sectionId) {
+            // Update active section
+            currentSection = sectionId;
+            
+            // Update sections visibility
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation items
+            navItems.forEach(item => {
+                if (item.dataset.section === sectionId) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Update swipe dots
+            const sectionIndex = ['parts-of-speech', 'phrases', 'clauses', 'sentences', 'figures-of-speech'].indexOf(sectionId);
+            swipeDots.forEach((dot, index) => {
+                if (index === sectionIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Scroll to top of section
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            
+            // Update progress bar
+            updateProgressBar();
+        }
+        
+        // Open detail modal
+        function openDetailModal(sectionId, index) {
+            let data;
+            
+            switch(sectionId) {
+                case 'parts-of-speech':
+                    data = grammarData.partsOfSpeech[index];
+                    break;
+                case 'phrases':
+                    data = grammarData.phrases[index];
+                    break;
+                case 'clauses':
+                    data = grammarData.clauses[index];
+                    break;
+                case 'sentences':
+                    data = grammarData.sentences[index];
+                    break;
+                case 'figures-of-speech':
+                    data = grammarData.figuresOfSpeech[index];
+                    break;
+            }
+            
+            if (data) {
+                document.getElementById('modalTitle').textContent = data.title;
+                document.getElementById('modalCategory').textContent = sectionId.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                
+                let examplesHtml = '';
+                if (data.moreExamples && data.moreExamples.length > 0) {
+                    examplesHtml = `
+                        <div class="modal-section">
+                            <h3 class="modal-section-title">
+                                <i class="fas fa-quote-right"></i>
+                                Examples
+                            </h3>
+                            <div class="modal-examples">
+                                ${data.moreExamples.map(example => `<div class="modal-example">${example}</div>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('modalContent').innerHTML = `
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">
+                            <i class="fas fa-info-circle"></i>
+                            Description
+                        </h3>
+                        <div class="modal-section-content">${data.description}</div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">
+                            <i class="fas fa-cogs"></i>
+                            Function
+                        </h3>
+                        <div class="modal-section-content">${data.function}</div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">
+                            <i class="fas fa-tags"></i>
+                            Types
+                        </h3>
+                        <div class="modal-section-content">${data.types}</div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">
+                            <i class="fas fa-quote-right"></i>
+                            Example
+                        </h3>
+                        <div class="modal-example">${data.example}</div>
+                    </div>
+                    
+                    ${examplesHtml}
+                    
+                    <div class="modal-section">
+                        <h3 class="modal-section-title">
+                            <i class="fas fa-book"></i>
+                            Detailed Information
+                        </h3>
+                        <div class="modal-section-content">${data.detailedInfo}</div>
+                    </div>
+                `;
+                
+                detailModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        // Close detail modal
+        function closeDetailModal() {
+            detailModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Open search modal
+        function openSearchModal() {
+            searchModal.classList.add('active');
+            searchInput.value = '';
+            searchResults.innerHTML = '';
+            searchInput.focus();
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close search modal
+        function closeSearchModal() {
+            searchModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Perform search
+        function performSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            
+            if (query.length < 2) {
+                searchResults.innerHTML = '<div class="empty-state">Enter at least 2 characters to search</div>';
+                return;
+            }
+            
+            const results = [];
+            
+            // Search through all sections
+            ['partsOfSpeech', 'phrases', 'clauses', 'sentences', 'figuresOfSpeech'].forEach((section, sectionIndex) => {
+                const sectionName = ['parts-of-speech', 'phrases', 'clauses', 'sentences', 'figures-of-speech'][sectionIndex];
+                const sectionData = grammarData[section];
+                
+                sectionData.forEach((item, index) => {
+                    if (item.title.toLowerCase().includes(query) || 
+                        item.description.toLowerCase().includes(query) ||
+                        item.types.toLowerCase().includes(query)) {
+                        results.push({
+                            title: item.title,
+                            category: sectionName,
+                            sectionIndex: sectionIndex,
+                            itemIndex: index
+                        });
+                    }
+                });
+            });
+            
+            // Display results
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="empty-state">No results found</div>';
+            } else {
+                searchResults.innerHTML = results.map(result => `
+                    <div class="search-result" data-section="${result.category}" data-index="${result.itemIndex}">
+                        <div class="search-result-title">${result.title}</div>
+                        <div class="search-result-category">${result.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+                    </div>
+                `).join('');
+                
+                // Add click event to search results
+                document.querySelectorAll('.search-result').forEach(result => {
+                    result.addEventListener('click', function() {
+                        closeSearchModal();
+                        switchSection(this.dataset.section);
+                        setTimeout(() => {
+                            openDetailModal(this.dataset.section, parseInt(this.dataset.index));
+                        }, 300);
+                    });
+                });
+            }
+        }
+        
+        // Toggle simplified view
+        function toggleSimplifiedView() {
+            isSimplifiedView = !isSimplifiedView;
+            
+            if (isSimplifiedView) {
+                document.body.classList.add('simplified-view');
+                simplifyToggle.classList.add('active');
+                simplifyToggle.innerHTML = '<i class="fas fa-eye-slash"></i><span>Detail</span>';
+            } else {
+                document.body.classList.remove('simplified-view');
+                simplifyToggle.classList.remove('active');
+                simplifyToggle.innerHTML = '<i class="fas fa-eye"></i><span>Simplify</span>';
+            }
+        }
+        
+        // Setup swipe navigation
+        function setupSwipeNavigation() {
+            const swipeContainer = document.getElementById('swipeNav');
+            let startX = 0;
+            let scrollLeft = 0;
+            let isDown = false;
+            
+            swipeContainer.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - swipeContainer.offsetLeft;
+                scrollLeft = swipeContainer.scrollLeft;
+            });
+            
+            swipeContainer.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+            
+            swipeContainer.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+            
+            swipeContainer.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - swipeContainer.offsetLeft;
+                const walk = (x - startX) * 2;
+                swipeContainer.scrollLeft = scrollLeft - walk;
+            });
+            
+            // Update swipe dots on scroll
+            swipeContainer.addEventListener('scroll', () => {
+                const scrollPercentage = swipeContainer.scrollLeft / (swipeContainer.scrollWidth - swipeContainer.clientWidth);
+                const dotIndex = Math.round(scrollPercentage * 4);
+                
+                swipeDots.forEach((dot, index) => {
+                    if (index === dotIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            });
+        }
+        
+        // Update progress bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = scrollTop / docHeight;
+            progressBar.style.width = `${scrollPercent * 100}%`;
+        }
+    </script>
+</body>
+</html>
